@@ -11,16 +11,22 @@ class MusicPlayer(object):
         self.setUpWindows(stdscreen)
 
     def setUpWindows(self, stdscreen):
-        result_win_x = 120
-        result_win_y = 40
+        track_list_length = 120
+        track_list_height = 40
 
-        self.result_window = stdscreen.subwin(result_win_y, result_win_x, 0, 0)
+        play_list_length = 50
+        play_list_height = 40
 
-#        for index in range(0,result_win_y):
-#            self.result_window.addstr(index, 0, "Hoopla")
-#
-#        self.result_window.refresh()
-#        time.sleep(1)
+        self.track_list_subwin = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
+        self.playlist_subwin = stdscreen.subwin(play_list_height, play_list_length, 0, track_list_length+1)
+
+        #for index in range(0,track_list_height):
+        #    self.track_list_subwin.addstr(index, 0, "hop")
+        #    self.playlist_subwin.addstr(index, 0, "blahh")
+
+        #self.track_list_subwin.refresh()
+        #self.playlist_subwin.refresh()
+        #time.sleep(5)
 
 
 
