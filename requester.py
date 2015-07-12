@@ -19,7 +19,7 @@ def send_request(user_search):
 def parse_results(target_json):
     track_list = []
 
-    for index, item in enumerate(target_json['tracks']['items'], start=1):
+    for index, item in enumerate(target_json['tracks']['items']):
         song_name = item['name']
         artist = item['artists'][0]['name']
         album_name = item['album']['name']

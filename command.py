@@ -6,7 +6,8 @@ class CommandHandler(object):
 
     def __init__(self, track_window, search_window, input_buffer):
         self.track_list = None
-        self.curr_position = 1
+        self.track_start = 2
+        self.curr_position = self.track_start
         self.track_window = track_window
         self.search_window = search_window
         self.input_buffer = input_buffer
@@ -18,12 +19,12 @@ class CommandHandler(object):
         self.curr_position = curr_position
 
     def moveUp(self):
-        if self.track_list != None and self.curr_position > 1:
+        if self.track_list != None and self.curr_position > self.track_start:
             self.curr_position -= 1
             self.drawTrackList()
 
     def moveDown(self):
-        if self.track_list != None and self.curr_position < len(self.track_list):
+        if self.track_list != None and self.curr_position < (len(self.track_list) + self.track_start - 1):
             self.curr_position += 1
             self.drawTrackList()
 
@@ -43,8 +44,9 @@ class CommandHandler(object):
 
         try:
             desired_index = int(desired_index)
-            if self.track_list != None and desired_index <= len(self.track_list) and desired_index > 0:
-                self.curr_position = desired_index
+            screen_index = desired_index + self.track_start - 1
+            if self.track_list != None and screen_index <= (len(self.track_list) + self.track_start - 1) and screen_index >= self.track_start:
+                self.curr_position = screen_index
                 self.currentSong()
                 self.drawTrackList()
 
@@ -56,7 +58,7 @@ class CommandHandler(object):
 
     def currentSong(self):
         if self.track_list != None:
-            self.playSong(self.track_list[self.curr_position-1])
+            self.playSong(self.track_list[self.curr_position - self.track_start])
 
     def playSong(self, track):
         track_spotify_uri = track[4]
@@ -75,7 +77,7 @@ class CommandHandler(object):
         self.search_window.clear()
         user_search = self.input_buffer.edit()
         self.track_list = requester.execute_search(user_search)
-        self.curr_position = 1
+        self.curr_position = self.track_start
         self.drawTrackList()
 
         curses.curs_set(0)
@@ -85,17 +87,24 @@ class CommandHandler(object):
 
         result_line = '{0:<2} | {1:<40} | {2:<25} | {3:<40}'
         result_header = result_line.format('#', 'Song Name', 'Artist', 'Album')
+        header_separator = '=' * (self.track_window.getmaxyx()[1] - 5)
+
         self.track_window.addstr(0, 0, result_header)
+        self.track_window.addstr(1, 0, header_separator)
 
-        for index, track in enumerate(self.track_list, start=1):
-
-            if self.curr_position == index:
+        for song_index, track in enumerate(self.track_list, start=1):
+            if (self.curr_position - self.track_start) == track[0]:
                 mode = curses.A_REVERSE
             else:
                 mode = curses.A_NORMAL
 
-            track_string = result_line.format(track[0], track[1][:40], track[2][:25], track[3][:40])
-            self.track_window.addstr(track[0], 0, track_string, mode)
+            song_index = str(song_index)
+
+            if len(song_index) == 1:
+                song_index = '0' + song_index
+
+            track_string = result_line.format(song_index, track[1][:40], track[2][:25], track[3][:40])
+            self.track_window.addstr(track[0] + self.track_start, 0, track_string, mode)
         self.track_window.refresh()
 
 
