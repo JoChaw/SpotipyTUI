@@ -42,6 +42,7 @@ class MusicPlayer(object):
         select_key = ord('\n')
         client_key = 99
         quit_key = 113
+        goto_index_key = 105
         move_up_key = curses.KEY_UP
         move_down_key = curses.KEY_DOWN
         next_song_key = curses.KEY_RIGHT
@@ -55,6 +56,7 @@ class MusicPlayer(object):
                         search_key : command_handler.searchContent,
                         select_key : command_handler.currentSong,
                         client_key : command_handler.showClient,
+                        goto_index_key : command_handler.playAtIndex,
                       }
 
         self.intro()

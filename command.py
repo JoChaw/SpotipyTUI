@@ -35,6 +35,25 @@ class CommandHandler(object):
         self.moveUp()
         self.currentSong()
 
+    def playAtIndex(self):
+        curses.curs_set(2)
+
+        self.search_window.clear()
+        desired_index = self.input_buffer.edit()
+
+        try:
+            desired_index = int(desired_index)
+            if self.track_list != None and desired_index <= len(self.track_list) and desired_index > 0:
+                self.curr_position = desired_index
+                self.currentSong()
+                self.drawTrackList()
+
+        except ValueError:
+            #TODO Error Message for invalid index
+            pass
+
+        curses.curs_set(0)
+
     def currentSong(self):
         if self.track_list != None:
             self.playSong(self.track_list[self.curr_position-1])
@@ -65,13 +84,13 @@ class CommandHandler(object):
         self.track_window.clear()
 
         result_output = []
-        result_line = '{0:<50} | {1:<25} | {2:<40}'
+        result_line = '{0:<40} | {1:<25} | {2:<40}'
         result_header = result_line.format('Song Name', 'Artist', 'Album')
 
         self.track_window.addstr(0, 0, result_header)
 
         for track in self.track_list:
-            result_output.append(result_line.format(track[1][:50], track[2][:25], track[2][:40]))
+            result_output.append(result_line.format(track[1][:40], track[2][:25], track[3][:40]))
 
         for index, track in enumerate(result_output, start=1):
 
