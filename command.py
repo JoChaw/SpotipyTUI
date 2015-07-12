@@ -83,24 +83,19 @@ class CommandHandler(object):
     def drawTrackList(self):
         self.track_window.clear()
 
-        result_output = []
-        result_line = '{0:<40} | {1:<25} | {2:<40}'
-        result_header = result_line.format('Song Name', 'Artist', 'Album')
-
+        result_line = '{0:<2} | {1:<40} | {2:<25} | {3:<40}'
+        result_header = result_line.format('#', 'Song Name', 'Artist', 'Album')
         self.track_window.addstr(0, 0, result_header)
 
-        for track in self.track_list:
-            result_output.append(result_line.format(track[1][:40], track[2][:25], track[3][:40]))
-
-        for index, track in enumerate(result_output, start=1):
+        for index, track in enumerate(self.track_list, start=1):
 
             if self.curr_position == index:
                 mode = curses.A_REVERSE
             else:
                 mode = curses.A_NORMAL
 
-            self.track_window.addstr(index, 0, track, mode)
-
+            track_string = result_line.format(track[0], track[1][:40], track[2][:25], track[3][:40])
+            self.track_window.addstr(track[0], 0, track_string, mode)
         self.track_window.refresh()
 
 

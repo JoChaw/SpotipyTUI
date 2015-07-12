@@ -62,16 +62,12 @@ class MusicPlayer(object):
         self.intro()
 
         while True:
-            try:
                 char_input = stdscreen.getch()
 
                 if char_input == quit_key:
                     break;
-
-                command_dict.get(char_input)()
-            except TypeError:
-                #TODO: Add error message for user - Invalid Key Input
-                pass
+                elif char_input in command_dict:
+                    command_dict.get(char_input)()
 
 
     def intro(self):
