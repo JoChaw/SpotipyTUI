@@ -36,6 +36,7 @@ class MusicPlayer(object):
 
         command_handler = CommandHandler(self.track_list_subwin, self.search_text_box)
         search_key = 115
+        select_key = ord('\n')
         quit_key = 113
         move_up_key = curses.KEY_UP
         move_down_key = curses.KEY_DOWN
@@ -47,6 +48,7 @@ class MusicPlayer(object):
                         next_song_key : command_handler.nextSong,
                         prev_song_key : command_handler.prevSong,
                         search_key : command_handler.searchContent,
+                        select_key : command_handler.currentSong,
                       }
 
         #welcomescreen

@@ -16,14 +16,14 @@ class CommandHandler(object):
     def setCurrPosition(self, curr_position):
         self.curr_position = curr_position
 
-    def moveUp():
-        if self.track_list != None and currPosition > 1:
-            currPosition -= 1
+    def moveUp(self):
+        if self.track_list != None and self.curr_position > 1:
+            self.curr_position -= 1
             self.drawTrackList()
 
     def moveDown(self):
-        if self.track_list != None and currPosition < len(self.tracklist):
-            currPosition += 1
+        if self.track_list != None and self.curr_position < len(self.track_list):
+            self.curr_position += 1
             self.drawTrackList()
 
     def nextSong(self):

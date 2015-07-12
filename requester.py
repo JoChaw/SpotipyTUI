@@ -12,9 +12,6 @@ def send_request(user_search):
     user_search = '+'.join(user_search.split())
 
     final_url = url.format(user_search)
-    file = open('blah.txt', 'w')
-    file.write(final_url)
-
     raw_results = requests.get(final_url)
 
     return raw_results.json()
