@@ -87,10 +87,10 @@ class CommandHandler(object):
 
         result_line = '{0:<2} | {1:<40} | {2:<25} | {3:<40}'
         result_header = result_line.format('#', 'Song Name', 'Artist', 'Album')
-        header_separator = '=' * (self.track_window.getmaxyx()[1] - 5)
+        separator_bar = '=' * (self.track_window.getmaxyx()[1] - 5)
 
         self.track_window.addstr(0, 0, result_header)
-        self.track_window.addstr(1, 0, header_separator)
+        self.track_window.addstr(1, 0, separator_bar)
 
         for song_index, track in enumerate(self.track_list, start=1):
             if (self.curr_position - self.track_start) == track[0]:
@@ -105,6 +105,9 @@ class CommandHandler(object):
 
             track_string = result_line.format(song_index, track[1][:40], track[2][:25], track[3][:40])
             self.track_window.addstr(track[0] + self.track_start, 0, track_string, mode)
+
+        bottom_bar_position = self.track_start + len(self.track_list)
+        self.track_window.addstr(bottom_bar_position, 0, separator_bar)
         self.track_window.refresh()
 
 
