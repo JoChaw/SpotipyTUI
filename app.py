@@ -82,14 +82,6 @@ class MusicPlayer(object):
         self.master_screen.addstr(intro_y, intro_x, intro_text)
 
 
-    def getQueryResults(self):
-        pass
-
-    def printTrackList(self):
-        pass
-
-    def printPlaylistList(self):
-        pass
 
 
 

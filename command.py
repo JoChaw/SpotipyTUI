@@ -1,3 +1,4 @@
+import subprocess
 
 class CommandHandler(object):
 
@@ -13,22 +14,36 @@ class CommandHandler(object):
         self.curr_position = curr_position
 
     def moveUp():
-        pass
+        if currPosition > 1:
+            currPosition -= 1
+            self.drawTrackList()
 
     def moveDown():
-        pass
+        if currPosition < len(self.tracklist):
+            currPosition += 1
+            self.drawTrackList()
 
     def nextSong():
-        pass
+        self.moveDown()
+        self.currentSong()
 
     def prevSong():
-        pass
+        self.moveUp()
+        self.currentSong()
 
-    def playSong():
-        pass
+    def currentSong():
+        self.playSong(self.track_list[self.curr_position-1])
+
+    def playSong(track)
+        track_spotify_uri = track[4]
+        apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]
+
+        subprocess.call(apple_script_call)
 
     def searchContent():
-        pass
+        self.track_list = requester.execute_search(user_search)
+        self.curr_position = 1
+        self.drawTrackList()
 
     def drawTrackList():
         result_output = []
