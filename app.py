@@ -1,5 +1,5 @@
 from curses import textpad
-import command
+from command import CommandHandler
 import time
 import curses
 
@@ -33,6 +33,8 @@ class MusicPlayer(object):
         self.search_text_box.stripspaces = 1
 
     def runLoop(self, stdscreen):
+
+        command_handler = CommandHandler(self.track_list_subwin, self.search_text_box)
         search_key = 115
         quit_key = 113
         move_up_key = curses.KEY_UP
@@ -40,20 +42,16 @@ class MusicPlayer(object):
         next_song_key = curses.KEY_RIGHT
         prev_song_key = curses.KEY_LEFT
 
-        command_dict = { move_up_key : command.moveUp,
-                        move_down_key : command.moveDown,
-                        next_song_key : command.nextSong,
-                        prev_song_key : command.prevSong,
-                        search_key : command.searchContent,
+        command_dict = { move_up_key : command_handler.moveUp,
+                        move_down_key : command_handler.moveDown,
+                        next_song_key : command_handler.nextSong,
+                        prev_song_key : command_handler.prevSong,
+                        search_key : command_handler.searchContent,
                       }
 
         #welcomescreen
         self.intro()
-        time.sleep(2)
-#        self.search_subwin.clear()
-#        user_input = self.search_text_box.edit()
-#        self.track_list_subwin.addstr(0, 0, user_input)
-#        self.track_list_subwin.refresh()
+        time.sleep(1)
 
         while True:
             char_input = stdscreen.getch()
@@ -61,7 +59,7 @@ class MusicPlayer(object):
             if char_input == quit_key:
                 break;
 
-            command_dict.get(char_input)(self.track_list_subwin)
+            command_dict.get(char_input)()
 
 
     def intro(self):
