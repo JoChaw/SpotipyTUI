@@ -4,11 +4,12 @@ import requester
 
 class CommandHandler(object):
 
-    def __init__(self, track_window, search_window):
+    def __init__(self, track_window, search_window, input_buffer):
         self.track_list = None
         self.curr_position = 1
         self.track_window = track_window
         self.search_window = search_window
+        self.input_buffer = input_buffer
 
     def setTrackList(self, track_list):
         self.track_list = track_list
@@ -45,10 +46,15 @@ class CommandHandler(object):
         subprocess.call(apple_script_call)
 
     def searchContent(self):
-        user_search = self.search_window.edit()
+        curses.curs_set(2)
+
+        self.search_window.clear()
+        user_search = self.input_buffer.edit()
         self.track_list = requester.execute_search(user_search)
         self.curr_position = 1
         self.drawTrackList()
+
+        curses.curs_set(0)
 
     def drawTrackList(self):
         self.track_window.clear()

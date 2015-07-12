@@ -12,6 +12,7 @@ class MusicPlayer(object):
         self.runLoop(stdscreen)
 
     def setUpWindows(self, stdscreen):
+
         self.master_screen = stdscreen
         track_list_length = 120
         track_list_height = 40
@@ -32,9 +33,11 @@ class MusicPlayer(object):
         self.search_text_box = textpad.Textbox(self.search_subwin)
         self.search_text_box.stripspaces = 1
 
+
+
     def runLoop(self, stdscreen):
 
-        command_handler = CommandHandler(self.track_list_subwin, self.search_text_box)
+        command_handler = CommandHandler(self.track_list_subwin, self.search_subwin, self.search_text_box)
         search_key = 115
         select_key = ord('\n')
         quit_key = 113
@@ -51,33 +54,50 @@ class MusicPlayer(object):
                         select_key : command_handler.currentSong,
                       }
 
-        #welcomescreen
         self.intro()
-        time.sleep(1)
 
         while True:
-            char_input = stdscreen.getch()
+            try:
+                char_input = stdscreen.getch()
 
-            if char_input == quit_key:
-                break;
+                if char_input == quit_key:
+                    break;
 
-            command_dict.get(char_input)()
+                command_dict.get(char_input)()
+            except TypeError:
+                #TODO: Add error message for user - Invalid Key Input
+                pass
 
 
     def intro(self):
-        intro_text = """
-                  _______ _______ _______ _______ ___ _______ ___ ___        _______ ___ ___ ___
-                  |   _   |   _   |   _   |       |   |   _   |   Y   |______|       |   Y   |   |
-                  |   1___|.  1   |.  |   |.|   | |.  |.  1   |   1   |______|.|   | |.  |   |.  |
-                  |____   |.  ____|.  |   `-|.  |-|.  |.  ____|\_   _/       `-|.  |-|.  |   |.  |
-                  |:  1   |:  |   |:  1   | |:  | |:  |:  |     |:  |          |:  | |:  1   |:  |
-                  |::.. . |::.|   |::.. . | |::.| |::.|::.|     |::.|          |::.| |::.. . |::.|
-                  `-------`---'   `-------' `---' `---`---'     `---'          `---' `-------`---'
+        intro_text = '''
 
-                    """
+
+                .d88888b                      dP   oo                            d888888P dP     dP dP
+                88.    "'                     88                                    88    88     88 88
+                `Y88888b. 88d888b. .d8888b. d8888P dP 88d888b. dP    dP             88    88     88 88
+                      `8b 88'  `88 88'  `88   88   88 88'  `88 88    88 88888888    88    88     88 88
+                d8'   .8P 88.  .88 88.  .88   88   88 88.  .88 88.  .88             88    Y8.   .8P 88
+                 Y88888P  88Y888P' `88888P'   dP   dP 88Y888P' `8888P88             dP    `Y88888P' dP
+                          88                          88            .88
+                          dP                          dP        d8888P
+
+                ~Spotify-TUI (Spotify Terminal User Interface)
+                    Control the Spotify Desktop Client from this text-based interface
+                    Python 3.0+
+
+                ~ Key Commands:
+                    Up-Arrow and Down-Arrow: Traverse Search Results
+                    Left-Arrow: Play Previous Song (Based on current cursor position)
+                    Right-Arrow: Play Next Song (Based on current cursor position)
+                    S: Search [Enter Query] + Enter
+                    Q: Quit
+
+
+                   '''
 
         intro_x = int(self.master_screen.getmaxyx()[1]/2)
-        intro_y = int(self.master_screen.getmaxyx()[0]/5)
+        intro_y = int(self.master_screen.getmaxyx()[0]/10)
 
         self.master_screen.addstr(intro_y, intro_x, intro_text)
 
