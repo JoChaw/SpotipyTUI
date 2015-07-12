@@ -15,4 +15,14 @@ def send_request(user_search):
     return raw_results
 
 def parse_results(target_json):
+    track_list = []
+
+    for index, item in enumerate(target_json['tracks']['items'], start=1):
+        song_name = item['name']
+        artist = item['artists'][0]['name']
+        album_name = item['album']['name']
+
+        track_list.append((index, song_name, artist, album_name, item['uri']))
+
+    return track_list
 

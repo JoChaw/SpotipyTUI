@@ -1,4 +1,5 @@
 import subprocess
+import requester
 
 class CommandHandler(object):
 
