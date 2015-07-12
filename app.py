@@ -91,7 +91,8 @@ class MusicPlayer(object):
                     Up-Arrow and Down-Arrow: Traverse Search Results
                     Left-Arrow: Play Previous Song (Based on current cursor position)
                     Right-Arrow: Play Next Song (Based on current cursor position)
-                    S: Search [Enter Query] + Enter
+                    S: [Query] Search for music
+                    I: [Song Index] Jump to song at specified index within search results
                     C: Show Spotify Client
                     Q: Quit
                    '''
