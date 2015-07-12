@@ -40,18 +40,21 @@ class MusicPlayer(object):
         command_handler = CommandHandler(self.track_list_subwin, self.search_subwin, self.search_text_box)
         search_key = 115
         select_key = ord('\n')
+        client_key = 99
         quit_key = 113
         move_up_key = curses.KEY_UP
         move_down_key = curses.KEY_DOWN
         next_song_key = curses.KEY_RIGHT
         prev_song_key = curses.KEY_LEFT
 
-        command_dict = { move_up_key : command_handler.moveUp,
+        command_dict = {
+                        move_up_key : command_handler.moveUp,
                         move_down_key : command_handler.moveDown,
                         next_song_key : command_handler.nextSong,
                         prev_song_key : command_handler.prevSong,
                         search_key : command_handler.searchContent,
                         select_key : command_handler.currentSong,
+                        client_key : command_handler.showClient,
                       }
 
         self.intro()
@@ -91,9 +94,8 @@ class MusicPlayer(object):
                     Left-Arrow: Play Previous Song (Based on current cursor position)
                     Right-Arrow: Play Next Song (Based on current cursor position)
                     S: Search [Enter Query] + Enter
+                    C: Show Spotify Client
                     Q: Quit
-
-
                    '''
 
         intro_x = int(self.master_screen.getmaxyx()[1]/2)

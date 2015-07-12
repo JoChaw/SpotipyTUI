@@ -45,6 +45,11 @@ class CommandHandler(object):
 
         subprocess.call(apple_script_call)
 
+    def showClient(self):
+        get_client_command = 'tell application "Spotify" \n activate \n end tell'
+        apple_script_call = ['osascript', '-e', get_client_command]
+        subprocess.call(apple_script_call)
+
     def searchContent(self):
         curses.curs_set(2)
 
