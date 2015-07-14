@@ -28,7 +28,7 @@ class MusicPlayer(object):
 
         self.track_list_subwin = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
         self.playlist_subwin = stdscreen.subwin(play_list_height, play_list_length, 0, self.track_list_subwin.getmaxyx()[1]+1)
-        self.search_subwin = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_list_subwin.getmaxyx()[0]+1, 0)
+        self.search_subwin = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_list_subwin.getmaxyx()[0]+1, 8)
         self.curr_playing_subwin = stdscreen.subwin(curr_playing_height, curr_playing_length, stdscreen.getmaxyx()[0]-2, 0)
         self.search_text_box = textpad.Textbox(self.search_subwin)
         self.search_text_box.stripspaces = 1
@@ -37,7 +37,7 @@ class MusicPlayer(object):
 
     def runLoop(self, stdscreen):
 
-        command_handler = CommandHandler(self.track_list_subwin, self.search_subwin, self.search_text_box)
+        command_handler = CommandHandler(stdscreen, self.track_list_subwin, self.search_subwin, self.search_text_box)
         search_key = 115
         select_key = ord('\n')
         client_key = 99

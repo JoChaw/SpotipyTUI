@@ -4,13 +4,14 @@ import requester
 
 class CommandHandler(object):
 
-    def __init__(self, track_window, search_window, input_buffer):
+    def __init__(self, stdscreen, track_window, search_window, input_buffer):
         self.track_list = None
         self.track_start = 2
         self.curr_position = self.track_start
         self.track_window = track_window
         self.search_window = search_window
         self.input_buffer = input_buffer
+        self.input_prompt = stdscreen.subwin(1, 10, self.track_window.getmaxyx()[0]+1, 1)
 
     def setTrackList(self, track_list):
         self.track_list = track_list
@@ -39,8 +40,15 @@ class CommandHandler(object):
     def playAtIndex(self):
         curses.curs_set(2)
 
+        self.input_prompt.addstr(0, 0, "Index:")
+        self.input_prompt.refresh()
         self.search_window.clear()
         desired_index = self.input_buffer.edit()
+
+        self.input_prompt.clear()
+        self.input_prompt.refresh()
+        self.search_window.clear()
+        self.search_window.refresh()
 
         try:
             desired_index = int(desired_index)
@@ -74,8 +82,16 @@ class CommandHandler(object):
     def searchContent(self):
         curses.curs_set(2)
 
+        self.input_prompt.addstr(0, 0, "Search:")
+        self.input_prompt.refresh()
         self.search_window.clear()
         user_search = self.input_buffer.edit()
+
+        self.input_prompt.clear()
+        self.input_prompt.refresh()
+        self.search_window.clear()
+        self.search_window.refresh()
+
         self.track_list = requester.execute_search(user_search)
         self.curr_position = self.track_start
         self.drawTrackList()
