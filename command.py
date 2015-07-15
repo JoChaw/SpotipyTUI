@@ -7,11 +7,13 @@ class CommandHandler(object):
     def __init__(self, stdscreen, track_window, search_window, input_buffer):
         self.track_list = None
         self.track_start = 2
+        self.stdscreen = stdscreen
         self.curr_position = self.track_start
         self.track_window = track_window
         self.search_window = search_window
         self.input_buffer = input_buffer
         self.input_prompt = stdscreen.subwin(1, 10, self.track_window.getmaxyx()[0]+1, 1)
+        self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0) #TODO Get rid of hardcoding
 
     def setTrackList(self, track_list):
         self.track_list = track_list
@@ -40,7 +42,7 @@ class CommandHandler(object):
     def playAtIndex(self):
         curses.curs_set(2)
 
-        self.input_prompt.addstr(0, 0, "Index:")
+        self.input_prompt.addstr(0, 0, "Index#:")
         self.input_prompt.refresh()
         self.search_window.clear()
         desired_index = self.input_buffer.edit()
@@ -73,6 +75,12 @@ class CommandHandler(object):
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]
 
         subprocess.call(apple_script_call)
+
+        now_playing = ">>> Now Playing: {0} --- {1} <<<".format(track[1][:50], track[2][:40])
+        self.now_playing_window.clear()
+        self.now_playing_window.addstr(0, 0, now_playing)
+        self.now_playing_window.refresh()
+
 
     def showClient(self):
         get_client_command = 'tell application "Spotify" \n activate \n end tell'
