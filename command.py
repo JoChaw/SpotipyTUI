@@ -75,12 +75,14 @@ class CommandHandler(object):
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]
 
         subprocess.call(apple_script_call)
+        self.updateNowPlaying(track)
 
+
+    def updateNowPlaying(self, track):
         now_playing = ">>> Now Playing: {0} --- {1} <<<".format(track[1][:50], track[2][:40])
         self.now_playing_window.clear()
         self.now_playing_window.addstr(0, 0, now_playing)
         self.now_playing_window.refresh()
-
 
     def showClient(self):
         get_client_command = 'tell application "Spotify" \n activate \n end tell'
