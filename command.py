@@ -119,31 +119,43 @@ class CommandHandler(object):
 
     def getArtistTop(self):
 
-        while self.country_id == None: #TODO: Ensure Valid Country Country Code
-            curses.curs_set(2)
+        if self.track_list != None:
+            while self.country_id == None: #TODO: Ensure Valid Country Country Code
+                curses.curs_set(2)
 
-            self.input_prompt.addstr(0, 0, "Country:")
-            self.input_prompt.refresh()
-            self.search_window.clear()
-            self.country_id = self.input_buffer.edit()
+                self.input_prompt.addstr(0, 0, "Country:")
+                self.input_prompt.refresh()
+                self.search_window.clear()
+                self.country_id = self.input_buffer.edit().split()[0]
 
-            self.input_prompt.clear() #TODO: Bundle all these clear and refreshes into methods
-            self.input_prompt.refresh()
-            self.search_window.clear()
-            self.search_window.refresh()
 
-            curses.curs_set(0)
+                self.input_prompt.clear() #TODO: Bundle all these clear and refreshes into methods
+                self.input_prompt.refresh()
+                self.search_window.clear()
+                self.search_window.refresh()
 
-        track = self.track_list[self.curr_position - self.track_start]
-        self.track_list = requester.get_artist_top(track[7], self.country_id)
-        self.curr_position = self.track_start
-        self.drawTrackList()
+                curses.curs_set(0)
+
+            track = self.track_list[self.curr_position - self.track_start]
+            artist_name = track[2]
+            artist_id = track[7]
+            artist_uri = track[6]
+
+            self.track_list = requester.get_artist_top(artist_name, artist_id, artist_uri, self.country_id)
+            self.curr_position = self.track_start
+            self.drawTrackList()
 
     def getAlbumTracks(self):
-        track = self.track_list[self.curr_position - self.track_start]
-        self.track_list = requester.get_album_tracks(track[8])
-        self.curr_position = self.track_start
-        self.drawTrackList()
+
+        if self.track_list != None:
+            track = self.track_list[self.curr_position - self.track_start]
+            album_name = track[3]
+            album_id = track[8]
+            album_uri = track[5]
+
+            self.track_list = requester.get_album_tracks(album_name, album_id, album_uri)
+            self.curr_position = self.track_start
+            self.drawTrackList()
 
     def drawTrackList(self):
         self.track_window.clear()
