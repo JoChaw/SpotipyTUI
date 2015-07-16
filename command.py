@@ -13,6 +13,7 @@ class CommandHandler(object):
         search_buffer_length = 100
         search_buffer_height = 1
 
+        self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
         self.track_start = 2
@@ -86,7 +87,6 @@ class CommandHandler(object):
         subprocess.call(apple_script_call)
         self.updateNowPlaying(track)
 
-
     def updateNowPlaying(self, track):
         now_playing = ">>> Now Playing: {0} --- {1} <<<".format(track[1][:50], track[2][:40])
         self.now_playing_window.clear()
@@ -116,6 +116,34 @@ class CommandHandler(object):
         self.drawTrackList()
 
         curses.curs_set(0)
+
+    def getArtistTop(self):
+
+        while self.country_id == None: #TODO: Ensure Valid Country Country Code
+            curses.curs_set(2)
+
+            self.input_prompt.addstr(0, 0, "Country:")
+            self.input_prompt.refresh()
+            self.search_window.clear()
+            self.country_id = self.input_buffer.edit()
+
+            self.input_prompt.clear() #TODO: Bundle all these clear and refreshes into methods
+            self.input_prompt.refresh()
+            self.search_window.clear()
+            self.search_window.refresh()
+
+            curses.curs_set(0)
+
+        track = self.track_list[self.curr_position - self.track_start]
+        self.track_list = requester.get_artist_top(track[7], self.country_id)
+        self.curr_position = self.track_start
+        self.drawTrackList()
+
+    def getAlbumTracks(self):
+        track = self.track_list[self.curr_position - self.track_start]
+        self.track_list = requester.get_album_tracks(track[8])
+        self.curr_position = self.track_start
+        self.drawTrackList()
 
     def drawTrackList(self):
         self.track_window.clear()
