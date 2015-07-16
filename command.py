@@ -110,9 +110,10 @@ class CommandHandler(object):
         self.search_window.clear()
         self.search_window.refresh()
 
-        self.track_list = requester.execute_search(user_search)
-        self.curr_position = self.track_start
-        self.drawTrackList()
+        if len(user_search) > 0:
+            self.track_list = requester.execute_search(user_search)
+            self.curr_position = self.track_start
+            self.drawTrackList()
 
         curses.curs_set(0)
 
