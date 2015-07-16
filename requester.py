@@ -1,7 +1,6 @@
 import requests
 
 def execute_search(user_search):
-
     raw_results = search_request(user_search)
     track_list = parse_search_results(raw_results)
 
@@ -34,7 +33,6 @@ def parse_search_results(target_json):
     return track_list
 
 def get_artist_top(artist_name, artist_id, artist_uri, country_id):
-
     raw_results = artist_request(artist_id, country_id)
     track_list = parse_artist_top_results(raw_results, artist_name, artist_id, artist_uri)
 
@@ -63,7 +61,6 @@ def parse_artist_top_results(target_json, artist_name, artist_id, artist_uri):
     return track_list
 
 def get_album_tracks(album_name, album_id, album_uri):
-
     raw_results = album_request(album_id)
     track_list = parse_album_results(raw_results, album_name, album_uri, album_id)
 
@@ -77,8 +74,6 @@ def album_request(album_id):
 
 
 def parse_album_results(target_json, album_name, album_uri, album_id):
-
-
     track_list = []
 
     for index, item in enumerate(target_json['items']):

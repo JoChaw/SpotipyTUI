@@ -6,7 +6,6 @@ import requester
 class CommandHandler(object):
 
     def __init__(self, stdscreen):
-
         track_list_length = 120
         track_list_height = 38
 
@@ -118,7 +117,6 @@ class CommandHandler(object):
         curses.curs_set(0)
 
     def getArtistTop(self):
-
         if self.track_list != None:
             while self.country_id == None: #TODO: Ensure Valid Country Country Code
                 curses.curs_set(2)
@@ -146,7 +144,6 @@ class CommandHandler(object):
             self.drawTrackList()
 
     def getAlbumTracks(self):
-
         if self.track_list != None:
             track = self.track_list[self.curr_position - self.track_start]
             album_name = track[3]

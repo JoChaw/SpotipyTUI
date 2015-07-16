@@ -13,7 +13,6 @@ class MusicPlayer(object):
         self.runLoop(stdscreen)
 
     def runLoop(self, stdscreen):
-
         command_handler = CommandHandler(stdscreen)
         search_key = 115
         select_key = ord('\n')
