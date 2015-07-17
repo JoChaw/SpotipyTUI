@@ -100,6 +100,12 @@ class CommandHandler(object):
         apple_script_call = ['osascript', '-e', get_client_command]
         subprocess.call(apple_script_call)
 
+    def prevTrackList(self):
+        if len(self.track_history) > 1:
+            self.track_list = self.track_history.pop()
+            self.curr_position = self.track_start
+            self.drawTrackList()
+
     def searchContent(self):
         curses.curs_set(2)
 
@@ -114,6 +120,7 @@ class CommandHandler(object):
         self.search_window.refresh()
 
         if len(user_search) > 0:
+            self.track_history.append(self.track_list)
             self.track_list = requester.execute_search(user_search)
             self.curr_position = self.track_start
             self.drawTrackList()
@@ -143,6 +150,7 @@ class CommandHandler(object):
             artist_id = track[7]
             artist_uri = track[6]
 
+            self.track_history.append(self.track_list)
             self.track_list = requester.get_artist_top(artist_name, artist_id, artist_uri, self.country_id)
             self.curr_position = self.track_start
             self.drawTrackList()
@@ -154,6 +162,7 @@ class CommandHandler(object):
             album_id = track[8]
             album_uri = track[5]
 
+            self.track_history.append(self.track_list)
             self.track_list = requester.get_album_tracks(album_name, album_id, album_uri)
             self.curr_position = self.track_start
             self.drawTrackList()

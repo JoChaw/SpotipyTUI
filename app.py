@@ -26,6 +26,7 @@ class MusicPlayer(object):
         next_song_key = curses.KEY_RIGHT
         prev_song_key = curses.KEY_LEFT
         play_pause_key = 32
+        back_key = 98
 
         command_dict = {
                         move_up_key : command_handler.moveUp,
@@ -39,6 +40,7 @@ class MusicPlayer(object):
                         artist_tracks_key : command_handler.getArtistTop,
                         album_tracks_key : command_handler.getAlbumTracks,
                         play_pause_key : command_handler.togglePlayPause,
+                        back_key : command_handler.prevTrackList,
                       }
 
         self.intro(stdscreen)
