@@ -19,10 +19,10 @@ class CommandHandler(object):
         self.track_start = 2
         self.curr_position = self.track_start
         self.track_window = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
-        self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0]+1, 8)
+        self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0]+1, 10)
         self.input_buffer  = textpad.Textbox(self.search_window)
         self.input_buffer.stripspaces = 1
-        self.input_prompt = stdscreen.subwin(1, 10, self.track_window.getmaxyx()[0]+1, 1)
+        self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0]+1, 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
 
     def setCurrPosition(self, curr_position):
