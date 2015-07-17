@@ -22,9 +22,13 @@ class MusicPlayer(object):
         artist_tracks_key = 116
         album_tracks_key = 97
         move_up_key = curses.KEY_UP
+        move_up_key_2 = 107
         move_down_key = curses.KEY_DOWN
+        move_down_key_2 = 106
         next_song_key = curses.KEY_RIGHT
+        next_song_key_2 = 108
         prev_song_key = curses.KEY_LEFT
+        prev_song_key_2 = 104
         play_pause_key = 32
         back_key = 98
 
@@ -33,6 +37,10 @@ class MusicPlayer(object):
                         move_down_key : command_handler.moveDown,
                         next_song_key : command_handler.nextSong,
                         prev_song_key : command_handler.prevSong,
+                        move_up_key_2 : command_handler.moveUp,
+                        move_down_key_2 : command_handler.moveDown,
+                        next_song_key_2 : command_handler.nextSong,
+                        prev_song_key_2 : command_handler.prevSong,
                         search_key : command_handler.searchContent,
                         select_key : command_handler.currentSong,
                         client_key : command_handler.showClient,
