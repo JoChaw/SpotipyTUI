@@ -87,10 +87,6 @@ class MusicPlayer(object):
         stdscreen.addstr(intro_y, intro_x, intro_text)
 
 
-
-
-
-
 def run():
     player = MusicPlayer
     curses.wrapper(player)

@@ -15,6 +15,7 @@ class CommandHandler(object):
         self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
+        self.track_history = []
         self.track_start = 2
         self.curr_position = self.track_start
         self.track_window = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
@@ -23,9 +24,6 @@ class CommandHandler(object):
         self.input_buffer.stripspaces = 1
         self.input_prompt = stdscreen.subwin(1, 10, self.track_window.getmaxyx()[0]+1, 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
-
-    def setTrackList(self, track_list):
-        self.track_list = track_list
 
     def setCurrPosition(self, curr_position):
         self.curr_position = curr_position
