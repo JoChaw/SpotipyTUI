@@ -79,6 +79,11 @@ class CommandHandler(object):
         if self.track_list != None:
             self.playSong(self.track_list[self.curr_position - self.track_start])
 
+
+    def togglePlayPause(self):
+        apple_script_call = ['osascript', '-e', 'tell application "Spotify" to playpause']
+        subprocess.call(apple_script_call)
+
     def playSong(self, track):
         track_spotify_uri = track[4]
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]

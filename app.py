@@ -25,6 +25,7 @@ class MusicPlayer(object):
         move_down_key = curses.KEY_DOWN
         next_song_key = curses.KEY_RIGHT
         prev_song_key = curses.KEY_LEFT
+        play_pause_key = 32
 
         command_dict = {
                         move_up_key : command_handler.moveUp,
@@ -37,6 +38,7 @@ class MusicPlayer(object):
                         goto_index_key : command_handler.playAtIndex,
                         artist_tracks_key : command_handler.getArtistTop,
                         album_tracks_key : command_handler.getAlbumTracks,
+                        play_pause_key : command_handler.togglePlayPause,
                       }
 
         self.intro(stdscreen)
@@ -68,6 +70,7 @@ class MusicPlayer(object):
                     Python 3.0+
 
                 ~ Key Commands:
+                    Space: Toggle Play/Pause
                     Up-Arrow and Down-Arrow: Traverse Search Results
                     Left-Arrow: Play Previous Song (Based on current cursor position)
                     Right-Arrow: Play Next Song (Based on current cursor position)
