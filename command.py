@@ -12,6 +12,9 @@ class CommandHandler(object):
         search_buffer_length = 100
         search_buffer_height = 1
 
+        help_window_length = 120
+        help_window_height = 5
+
         self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
@@ -19,11 +22,25 @@ class CommandHandler(object):
         self.track_start = 2
         self.curr_position = self.track_start
         self.track_window = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
-        self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0]+1, 10)
+        self.help_window = stdscreen.subwin(help_window_height, help_window_length, self.track_window.getmaxyx()[0], 1)
+        self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0], 10)
         self.input_buffer  = textpad.Textbox(self.search_window)
         self.input_buffer.stripspaces = 1
-        self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0]+1, 1)
+        self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
+
+    def printCommandList(self):
+        command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
+                          [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
+                          [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front]
+                          [A: GoTo Album of Selected Track] [T: Top 10 Tracks of Artist of Selected Track]
+                          [B: Back to Prev Track List] [C: Show Command List]"""
+
+        command_menu = '\n'.join(' '.join(line.split()) for line in command_menu.split('\n'))
+
+        self.help_window.clear()
+        self.help_window.addstr(0, 0, command_menu)
+        self.help_window.refresh()
 
     def setCurrPosition(self, curr_position):
         self.curr_position = curr_position

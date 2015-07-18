@@ -16,7 +16,7 @@ class MusicPlayer(object):
         command_handler = CommandHandler(stdscreen)
         search_key = 115
         select_key = ord('\n')
-        client_key = 99
+        spotify_client_key = 102
         quit_key = 113
         goto_index_key = 105
         artist_tracks_key = 116
@@ -31,6 +31,7 @@ class MusicPlayer(object):
         prev_song_key_2 = 104
         play_pause_key = 32
         back_key = 98
+        command_list_key = 99
 
         command_dict = {
                         move_up_key : command_handler.moveUp,
@@ -43,12 +44,13 @@ class MusicPlayer(object):
                         prev_song_key_2 : command_handler.prevSong,
                         search_key : command_handler.searchContent,
                         select_key : command_handler.currentSong,
-                        client_key : command_handler.showClient,
+                        spotify_client_key : command_handler.showClient,
                         goto_index_key : command_handler.playAtIndex,
                         artist_tracks_key : command_handler.getArtistTop,
                         album_tracks_key : command_handler.getAlbumTracks,
                         play_pause_key : command_handler.togglePlayPause,
                         back_key : command_handler.prevTrackList,
+                        command_list_key : command_handler.printCommandList,
                       }
 
         self.intro(stdscreen)
