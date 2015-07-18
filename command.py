@@ -23,6 +23,7 @@ class CommandHandler(object):
         self.curr_position = self.track_start
         self.track_window = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
         self.help_window = stdscreen.subwin(help_window_height, help_window_length, self.track_window.getmaxyx()[0], 1)
+        self.prompt_area = self.help_window
         self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0], 10)
         self.input_buffer  = textpad.Textbox(self.search_window)
         self.input_buffer.stripspaces = 1
@@ -33,7 +34,7 @@ class CommandHandler(object):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front]
-                          [A: GoTo Album of Selected Track] [T: Top 10 Tracks of Artist of Selected Track]
+                          [A: GoTo Album of Selected Track] [T: Top Tracks of Artist of Selected Track]
                           [B: Back to Prev Track List] [C: Show Command List]"""
 
         command_menu = '\n'.join(' '.join(line.split()) for line in command_menu.split('\n'))
@@ -66,15 +67,14 @@ class CommandHandler(object):
     def playAtIndex(self):
         curses.curs_set(2)
 
+        self.prompt_area.clear()
         self.input_prompt.addstr(0, 0, "Index#:")
-        self.input_prompt.refresh()
         self.search_window.clear()
+        self.prompt_area.refresh()
         desired_index = self.input_buffer.edit()
 
-        self.input_prompt.clear()
-        self.input_prompt.refresh()
-        self.search_window.clear()
-        self.search_window.refresh()
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
 
         try:
             desired_index = int(desired_index)
@@ -126,15 +126,14 @@ class CommandHandler(object):
     def searchContent(self):
         curses.curs_set(2)
 
+        self.prompt_area.clear()
         self.input_prompt.addstr(0, 0, "Search:")
-        self.input_prompt.refresh()
         self.search_window.clear()
+        self.prompt_area.refresh()
         user_search = self.input_buffer.edit()
 
-        self.input_prompt.clear()
-        self.input_prompt.refresh()
-        self.search_window.clear()
-        self.search_window.refresh()
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
 
         if len(user_search) > 0:
             if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
@@ -151,16 +150,14 @@ class CommandHandler(object):
             while self.country_id == None: #TODO: Ensure Valid Country Country Code
                 curses.curs_set(2)
 
+                self.prompt_area.clear()
                 self.input_prompt.addstr(0, 0, "Country:")
-                self.input_prompt.refresh()
                 self.search_window.clear()
+                self.prompt_area.refresh()
                 self.country_id = self.input_buffer.edit().split()[0]
 
-
-                self.input_prompt.clear() #TODO: Bundle all these clear and refreshes into methods
-                self.input_prompt.refresh()
-                self.search_window.clear()
-                self.search_window.refresh()
+                self.prompt_area.clear()
+                self.prompt_area.refresh()
 
                 curses.curs_set(0)
 
@@ -217,6 +214,7 @@ class CommandHandler(object):
         bottom_bar_position = self.track_start + len(self.track_list)
         self.track_window.addstr(bottom_bar_position, 0, separator_bar)
         self.track_window.refresh()
+
 
 
 
