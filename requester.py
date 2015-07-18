@@ -42,9 +42,6 @@ def artist_request(artist_id, country_id):
     url = 'https://api.spotify.com/v1/artists/{0}/top-tracks?country={1}'.format(artist_id, country_id)
     raw_results = requests.get(url)
 
-    file = open('blah.txt', 'w')
-    file.write(raw_results.text)
-
     return raw_results.json()
 
 def parse_artist_top_results(target_json, artist_name, artist_id, artist_uri):
