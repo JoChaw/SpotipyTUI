@@ -30,7 +30,7 @@ class CommandHandler(object):
         self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
 
-    def printCommandList(self):
+    def print_command_list(self):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front]
@@ -43,28 +43,28 @@ class CommandHandler(object):
         self.help_window.addstr(0, 0, command_menu)
         self.help_window.refresh()
 
-    def setCurrPosition(self, curr_position):
+    def set_curr_position(self, curr_position):
         self.curr_position = curr_position
 
-    def moveUp(self):
+    def move_up(self):
         if self.track_list != None and self.curr_position > self.track_start:
             self.curr_position -= 1
-            self.drawTrackList()
+            self.draw_track_list()
 
-    def moveDown(self):
+    def move_down(self):
         if self.track_list != None and self.curr_position < (len(self.track_list) + self.track_start - 1):
             self.curr_position += 1
-            self.drawTrackList()
+            self.draw_track_list()
 
-    def nextSong(self):
-        self.moveDown()
-        self.currentSong()
+    def next_song(self):
+        self.move_down()
+        self.current_song()
 
-    def prevSong(self):
-        self.moveUp()
-        self.currentSong()
+    def prev_song(self):
+        self.move_up()
+        self.current_song()
 
-    def playAtIndex(self):
+    def play_at_index(self):
         curses.curs_set(2)
 
         self.prompt_area.clear()
@@ -81,8 +81,8 @@ class CommandHandler(object):
             screen_index = desired_index + self.track_start - 1
             if self.track_list != None and screen_index <= (len(self.track_list) + self.track_start - 1) and screen_index >= self.track_start:
                 self.curr_position = screen_index
-                self.currentSong()
-                self.drawTrackList()
+                self.current_song()
+                self.draw_track_list()
 
         except ValueError:
             #TODO Error Message for invalid index
@@ -90,40 +90,40 @@ class CommandHandler(object):
 
         curses.curs_set(0)
 
-    def currentSong(self):
+    def current_song(self):
         if self.track_list != None:
-            self.playSong(self.track_list[self.curr_position - self.track_start])
+            self.play_song(self.track_list[self.curr_position - self.track_start])
 
 
-    def togglePlayPause(self):
+    def toggle_play_pause(self):
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to playpause']
         subprocess.call(apple_script_call)
 
-    def playSong(self, track):
+    def play_song(self, track):
         track_spotify_uri = track[4]
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]
 
         subprocess.call(apple_script_call)
-        self.updateNowPlaying(track)
+        self.update_now_playing(track)
 
-    def updateNowPlaying(self, track):
+    def update_now_playing(self, track):
         now_playing = ">>> Now Playing: {0} --- {1} <<<".format(track[1][:50], track[2][:40])
         self.now_playing_window.clear()
         self.now_playing_window.addstr(0, 0, now_playing)
         self.now_playing_window.refresh()
 
-    def showClient(self):
+    def show_client(self):
         get_client_command = 'tell application "Spotify" \n activate \n end tell'
         apple_script_call = ['osascript', '-e', get_client_command]
         subprocess.call(apple_script_call)
 
-    def prevTrackList(self):
+    def prev_track_list(self):
         if len(self.track_history) > 1:
             self.track_list = self.track_history.pop()
             self.curr_position = self.track_start
-            self.drawTrackList()
+            self.draw_track_list()
 
-    def searchContent(self):
+    def search_content(self):
         curses.curs_set(2)
 
         self.prompt_area.clear()
@@ -141,11 +141,11 @@ class CommandHandler(object):
 
             self.track_list = requester.execute_search(user_search)
             self.curr_position = self.track_start
-            self.drawTrackList()
+            self.draw_track_list()
 
         curses.curs_set(0)
 
-    def getArtistTop(self):
+    def get_artist_top(self):
         if self.track_list != None:
             while self.country_id == None: #TODO: Ensure Valid Country Country Code
                 curses.curs_set(2)
@@ -171,9 +171,9 @@ class CommandHandler(object):
 
             self.track_list = requester.get_artist_top(artist_name, artist_id, artist_uri, self.country_id)
             self.curr_position = self.track_start
-            self.drawTrackList()
+            self.draw_track_list()
 
-    def getAlbumTracks(self):
+    def get_album_tracks(self):
         if self.track_list != None:
             track = self.track_list[self.curr_position - self.track_start]
             album_name = track[3]
@@ -185,9 +185,9 @@ class CommandHandler(object):
 
             self.track_list = requester.get_album_tracks(album_name, album_id, album_uri)
             self.curr_position = self.track_start
-            self.drawTrackList()
+            self.draw_track_list()
 
-    def drawTrackList(self):
+    def draw_track_list(self):
         self.track_window.clear()
 
         result_line = '{0:<2} | {1:<40} | {2:<25} | {3:<40}'
