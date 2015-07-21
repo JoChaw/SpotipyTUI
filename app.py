@@ -83,13 +83,17 @@ class MusicPlayer(object):
 
                 ~ Key Commands:
                     Space: Toggle Play/Pause
-                    Up-Arrow and Down-Arrow: Traverse Search Results
-                    Left-Arrow: Play Previous Song (Based on current cursor position)
-                    Right-Arrow: Play Next Song (Based on current cursor position)
+                    <Enter>: Play track at current position
+                    <Up>/K: Go Up
+                    <Down>/J: Go Down
+                    <Left>/H: Play previous track (Based on current cursor position)
+                    <Right>/L: Play next track (Based on current cursor position)
                     S: Search for music
                     I: Jump to song at index within search results
-                    H: Help (Shows list of commands)
-                    C: Show Spotify Client
+                    A: Go to album of current selection
+                    T: Get top tracks of artist of curent selection
+                    C: Show Command List
+                    F: Show Spotify Client
                     Q: Quit
                    '''
 
