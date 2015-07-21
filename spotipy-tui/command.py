@@ -29,6 +29,10 @@ class CommandHandler(object):
         self.input_buffer.stripspaces = 1
         self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
+        self.command_list_hint = stdscreen.subwin(1, 30, stdscreen.getmaxyx()[0] - 3, 0)
+
+        self.command_list_hint.addstr(0, 0, "Press C for Command List")
+        self.command_list_hint.refresh()
 
     def print_command_list(self):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
