@@ -72,7 +72,7 @@ class CommandHandler(object):
         curses.curs_set(2)
 
         self.prompt_area.clear()
-        self.input_prompt.addstr(0, 0, "Index#:")
+        self.input_prompt.addstr(0, 0, " Index:")
         self.search_window.clear()
         self.prompt_area.refresh()
         desired_index = self.input_buffer.edit()
