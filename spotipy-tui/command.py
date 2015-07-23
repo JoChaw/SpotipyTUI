@@ -27,7 +27,7 @@ class CommandHandler(object):
         self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0], 10)
         self.input_buffer  = textpad.Textbox(self.search_window)
         self.input_buffer.stripspaces = 1
-        self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
+        self.input_prompt = stdscreen.subwin(2, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
         self.command_list_hint = stdscreen.subwin(1, 30, stdscreen.getmaxyx()[0] - 3, 0)
 
@@ -128,6 +128,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def search_content(self):
+        self.country_check()
         curses.curs_set(2)
 
         self.prompt_area.clear()
@@ -151,19 +152,8 @@ class CommandHandler(object):
 
     def get_artist_top(self):
         if self.track_list != None:
-            while self.country_id == None: #TODO: Ensure Valid Country Country Code
-                curses.curs_set(2)
 
-                self.prompt_area.clear()
-                self.input_prompt.addstr(0, 0, "Country:")
-                self.search_window.clear()
-                self.prompt_area.refresh()
-                self.country_id = self.input_buffer.edit().split()[0]
-
-                self.prompt_area.clear()
-                self.prompt_area.refresh()
-
-                curses.curs_set(0)
+            self.country_check()
 
             track = self.track_list[self.curr_position - self.track_start]
             artist_name = track[2]
@@ -219,8 +209,21 @@ class CommandHandler(object):
         self.track_window.addstr(bottom_bar_position, 0, separator_bar)
         self.track_window.refresh()
 
+    def country_check(self):
 
+        while self.country_id == None: #TODO: Ensure Valid Country Country Code
+            curses.curs_set(2)
 
+            self.prompt_area.clear()
+            self.input_prompt.addstr(0, 0, "Country:")
+            self.search_window.clear()
+            self.prompt_area.refresh()
+            self.country_id = self.input_buffer.edit().split()[0]
+
+            self.prompt_area.clear()
+            self.prompt_area.refresh()
+
+            curses.curs_set(0)
 
 
 
