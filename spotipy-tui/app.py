@@ -10,9 +10,9 @@ class MusicPlayer(object):
         self.run(stdscreen)
 
     def run(self, stdscreen):
-        self.runLoop(stdscreen)
+        self.run_loop(stdscreen)
 
-    def runLoop(self, stdscreen):
+    def run_loop(self, stdscreen):
         command_handler = CommandHandler(stdscreen)
         search_key = 115
         select_key = ord('\n')
