@@ -1,16 +1,16 @@
 import requests
 
-def execute_search(user_search):
-    raw_results = search_request(user_search)
+def execute_search(user_search, track_list_height):
+    raw_results = search_request(user_search, track_list_height)
     track_list = parse_search_results(raw_results)
 
     return track_list
 
-def search_request(user_search):
-    url = 'http://api.spotify.com/v1/search?q={0}&type=track&limit=35'
+def search_request(user_search, track_list_height):
+    url = 'http://api.spotify.com/v1/search?q={0}&type=track&limit={1}'
     user_search = '+'.join(user_search.split())
 
-    url  = url.format(user_search)
+    url  = url.format(user_search, track_list_height)
     raw_results = requests.get(url)
 
     return raw_results.json()

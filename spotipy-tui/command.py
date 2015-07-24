@@ -7,7 +7,7 @@ class CommandHandler(object):
 
     def __init__(self, stdscreen):
         track_list_length = 120
-        track_list_height = 38
+        track_list_height = 33
 
         search_buffer_length = 100
         search_buffer_height = 1
@@ -144,7 +144,7 @@ class CommandHandler(object):
             if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
                 self.track_history.append(self.track_list)
 
-            self.track_list = requester.execute_search(user_search)
+            self.track_list = requester.execute_search(user_search, self.track_window.getmaxyx()[0]-3)
             self.curr_position = self.track_start
             self.draw_track_list()
 
