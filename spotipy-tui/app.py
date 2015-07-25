@@ -56,6 +56,8 @@ class MusicPlayer(object):
         curses.curs_set(0)
         self.intro(stdscreen)
         command_handler.country_check()
+        command_handler.prompt_area.addstr(0, 0, "Good To Go! Start a search with [S]")
+        command_handler.prompt_area.refresh()
 
         while True:
                 char_input = stdscreen.getch()
