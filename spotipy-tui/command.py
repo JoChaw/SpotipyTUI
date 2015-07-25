@@ -1,4 +1,5 @@
 from curses import textpad
+import time
 import curses
 import subprocess
 import requester
@@ -209,20 +210,29 @@ class CommandHandler(object):
     def country_check(self):
 
         valid_countries = [line.strip() for line in open("country_iso_codes.txt", 'r')]
+        self.country_check_prompt()
 
         while self.country_id not in valid_countries:
-            curses.curs_set(2)
-
-            self.prompt_area.clear()
-            self.input_prompt.addstr(0, 0, "Country:")
-            self.search_window.clear()
+            self.prompt_area.addstr("::Invalid Country ISO Code::")
             self.prompt_area.refresh()
-            self.country_id = self.input_buffer.edit().split()[0].upper()
+            time.sleep(1)
+            self.country_check_prompt()
 
-            self.prompt_area.clear()
-            self.prompt_area.refresh()
 
-            curses.curs_set(0)
+    def country_check_prompt(self):
+        curses.curs_set(2)
+
+        self.prompt_area.clear()
+        self.input_prompt.addstr(0, 0, "Country:")
+        self.search_window.clear()
+        self.prompt_area.refresh()
+        self.country_id = self.input_buffer.edit().split()[0].upper()
+
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
+
+        curses.curs_set(0)
+
 
 
 
