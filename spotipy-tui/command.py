@@ -42,7 +42,7 @@ class CommandHandler(object):
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front]
                           [A: GoTo Album of Selected Track] [T: Top Tracks of Artist of Selected Track]
-                          [B: Back to Prev Track List] [C: Show Command List]"""
+                          [B: Back to Prev Track List] [C: Show Command List] [Y: Change Country Code]"""
 
         command_menu = '\n'.join(' '.join(line.split()) for line in command_menu.split('\n'))
 
