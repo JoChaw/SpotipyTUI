@@ -55,6 +55,7 @@ class MusicPlayer(object):
 
         curses.curs_set(0)
         self.intro(stdscreen)
+        command_handler.country_check()
 
         while True:
                 char_input = stdscreen.getch()
@@ -66,7 +67,6 @@ class MusicPlayer(object):
 
 
     def intro(self, stdscreen):
-
         intro_text = '''
 
 
@@ -97,14 +97,10 @@ class MusicPlayer(object):
                     C: Show Command List
                     F: Show Spotify Client
                     Q: Quit
-
-                [Press S to begin searching for music]
                    '''
 
-        intro_x = int(stdscreen.getmaxyx()[1]/2)
-        intro_y = int(stdscreen.getmaxyx()[0]/10)
-
-        stdscreen.addstr(intro_y, intro_x, intro_text)
+        stdscreen.addstr(0, 0, intro_text)
+        stdscreen.refresh()
 
 
 def run():

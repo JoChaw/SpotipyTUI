@@ -34,6 +34,8 @@ class CommandHandler(object):
         self.command_list_hint.addstr(0, 0, "Press C for Command List")
         self.command_list_hint.refresh()
 
+
+
     def print_command_list(self):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
@@ -127,7 +129,6 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def search_content(self):
-        self.country_check()
         curses.curs_set(2)
 
         self.prompt_area.clear()
@@ -151,9 +152,6 @@ class CommandHandler(object):
 
     def get_artist_top(self):
         if self.track_list != None:
-
-            self.country_check()
-
             track = self.track_list[self.curr_position - self.track_start]
             artist_name = track[2]
             artist_id = track[7]
