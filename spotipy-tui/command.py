@@ -145,7 +145,7 @@ class CommandHandler(object):
             if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
                 self.track_history.append(self.track_list)
 
-            self.track_list = requester.execute_search(user_search, self.track_window.getmaxyx()[0]-3)
+            self.track_list = requester.execute_search(user_search, self.country_id, self.track_window.getmaxyx()[0]-3)
             self.curr_position = self.track_start
             self.draw_track_list()
 
