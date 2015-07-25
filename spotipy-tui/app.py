@@ -1,5 +1,4 @@
 from command import CommandHandler
-import time
 import curses
 
 
