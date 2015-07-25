@@ -98,7 +98,6 @@ class CommandHandler(object):
         if self.track_list != None:
             self.play_song(self.track_list[self.curr_position - self.track_start])
 
-
     def toggle_play_pause(self):
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to playpause']
         subprocess.call(apple_script_call)
@@ -211,14 +210,16 @@ class CommandHandler(object):
 
     def country_check(self):
 
-        while self.country_id == None: #TODO: Ensure Valid Country Country Code
+        valid_countries = [line.strip() for line in open("country_iso_codes.txt", 'r')]
+
+        while self.country_id not in valid_countries:
             curses.curs_set(2)
 
             self.prompt_area.clear()
             self.input_prompt.addstr(0, 0, "Country:")
             self.search_window.clear()
             self.prompt_area.refresh()
-            self.country_id = self.input_buffer.edit().split()[0]
+            self.country_id = self.input_buffer.edit().split()[0].upper()
 
             self.prompt_area.clear()
             self.prompt_area.refresh()
