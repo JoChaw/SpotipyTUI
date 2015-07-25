@@ -31,6 +31,7 @@ class MusicPlayer(object):
         play_pause_key = 32
         back_key = 98
         command_list_key = 99
+        country_change_key = 121
 
         command_dict = {
                         move_up_key : command_handler.move_up,
@@ -50,6 +51,7 @@ class MusicPlayer(object):
                         play_pause_key : command_handler.toggle_play_pause,
                         back_key : command_handler.prev_track_list,
                         command_list_key : command_handler.print_command_list,
+                        country_change_key : command_handler.country_check,
                       }
 
         curses.curs_set(0)
@@ -97,6 +99,7 @@ class MusicPlayer(object):
                     T: Get top tracks of artist of curent selection
                     C: Show Command List
                     F: Show Spotify Client
+                    Y: Change Country ISO Code
                     Q: Quit
                    '''
 
