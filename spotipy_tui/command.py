@@ -226,7 +226,10 @@ class CommandHandler(object):
         self.input_prompt.addstr(0, 0, "Country:")
         self.search_window.clear()
         self.prompt_area.refresh()
-        self.country_id = self.input_buffer.edit().split()[0].upper()
+        user_input = self.input_buffer.edit()
+
+        if len(user_input) > 0:
+            self.country_id = user_input.split()[0].upper()
 
         self.prompt_area.clear()
         self.prompt_area.refresh()
