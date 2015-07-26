@@ -4,6 +4,7 @@ setup(
         name = 'spotipy-tui',
         packages = ['spotipy_tui'],
         version = '1.0.1',
+        include_package_data = True,
         description = 'Text-based UI to control Spotify client',
         author = 'Jonathan Chen',
         author_email = 'jonshepchen@gmail.com',
