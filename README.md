@@ -6,16 +6,25 @@ Requires OSX and Python 3. <br>
 [Quick Demo Video](https://www.youtube.com/watch?v=BYVSOE8mjWs)
 
 ##Installation
+
+####Pip
 ```python
 $ sudo pip install spotipy-tui
 ```
 
-###Usage 
+####Clone Repo
+```python 
+$ git clone https://github.com/JonShepChen/SpotipyTUI.git
+$ cd SpotipyTUI
+$ sudo python setup.py install
+```
+
+##Usage 
 ```python 
 # Start the program
 $ spotify-tui
 ```
-###Command List
+##Command List
 * S: Search for music
 * I: Jump to song at index within search results
 * A: Go to album of current selection
@@ -31,7 +40,7 @@ $ spotify-tui
 * [Right]/L: Play next track (based on cursor position)
 * Q: Quit
 
-### Dependencies 
+## Dependencies 
 ```bash
 pip install requests
 ```
