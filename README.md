@@ -3,7 +3,9 @@ Spotipy-TUI is a text-based UI program to control the Spotify desktop client on 
 Run it within a terminal session. <br>
 Requires OSX and Python 3. <br>
 
-[Quick Demo Video](https://www.youtube.com/watch?v=BYVSOE8mjWs)
+* Make sure the terminal window you are running this program in is big enough! 
+* If the terminal window is not large enough, the program can't start up.
+* [Quick Demo Video](https://www.youtube.com/watch?v=BYVSOE8mjWs)
 
 ##Installation
 
