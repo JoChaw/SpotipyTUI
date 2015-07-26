@@ -1,4 +1,5 @@
 from command import CommandHandler
+import sys
 import curses
 
 
@@ -64,7 +65,7 @@ class MusicPlayer(object):
                 char_input = stdscreen.getch()
 
                 if char_input == quit_key:
-                    break;
+                    sys.exit()
                 elif char_input in command_dict:
                     command_dict.get(char_input)()
 
@@ -87,19 +88,19 @@ class MusicPlayer(object):
                     Python 3.0+
 
                 ~ Key Commands:
-                    Space: Toggle Play/Pause
-                    <Enter>: Play track at current position
-                    <Up>/K: Go Up
-                    <Down>/J: Go Down
-                    <Left>/H: Play previous track (Based on current cursor position)
-                    <Right>/L: Play next track (Based on current cursor position)
                     S: Search for music
                     I: Jump to song at index within search results
                     A: Go to album of current selection
-                    T: Get top tracks of artist of curent selection
+                    T: Get current selection's artist's top tracks
                     C: Show Command List
-                    F: Show Spotify Client
+                    F: Bring up Spotify desktop client
                     Y: Change Country ISO Code
+                    [Space]: Toggle Play/Pause
+                    [Enter]: Play track at current position
+                    [Up]/K: Go Up
+                    [Down]/J: Go Down
+                    [Left]/H: Play previous track (Based on current cursor position)
+                    [Right]/L: Play next track (Based on current cursor position)
                     Q: Quit
                    '''
 
