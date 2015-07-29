@@ -10,14 +10,14 @@ Requires OSX and Python 3. <br>
 ##Installation
 
 ####Pip
-```python
+```bash
 $ sudo pip install spotipy-tui
 ```
 If you have versions of both Python 2 and 3, make sure the pip command is pointing to the correct Python 3 version. 
 (or replace 'pip' with whichever command you use to invoke pip for Python 3)
 
 ####Clone Repo
-```python 
+```bash 
 $ git clone https://github.com/JonShepChen/SpotipyTUI.git
 $ cd SpotipyTUI
 $ sudo python setup.py install
@@ -46,5 +46,5 @@ $ spotify-tui
 
 ## Dependencies 
 ```bash
-pip install requests
+$ pip install requests
 ```
