@@ -20,7 +20,7 @@ If you have both Python 2 and 3 installed, make sure the pip command is pointing
 ```bash 
 $ git clone https://github.com/JonShepChen/SpotipyTUI.git
 $ cd SpotipyTUI
-$ sudo python setup.py install
+$ python setup.py install
 ```
 
 ##Usage 
