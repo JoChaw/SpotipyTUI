@@ -11,7 +11,7 @@ Requires OSX and Python 3. <br>
 
 ####Pip
 ```bash
-$ sudo pip install spotipy-tui
+$ pip install spotipy-tui
 ```
 If you have both Python 2 and 3 installed, make sure the pip command is pointing to the Python 3 version. 
 (or replace 'pip' with whichever command you use to invoke pip for Python 3)
@@ -22,6 +22,8 @@ $ git clone https://github.com/JonShepChen/SpotipyTUI.git
 $ cd SpotipyTUI
 $ python setup.py install
 ```
+If you have both Python 2 and 3 installed, make sure the python command is pointing to the Python 3 version.
+(or replace 'python' with whichever command you use to invoke Python 3)
 
 ##Usage 
 ```python 
