@@ -26,7 +26,7 @@ $ sudo python setup.py install
 ##Usage 
 ```python 
 # Start the program
-$ spotify-tui
+$ spotipy-tui
 ```
 ##Command List
 * S: Search for music
