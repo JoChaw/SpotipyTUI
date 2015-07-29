@@ -13,7 +13,7 @@ Requires OSX and Python 3. <br>
 ```bash
 $ sudo pip install spotipy-tui
 ```
-If you have versions of both Python 2 and 3, make sure the pip command is pointing to the correct Python 3 version. 
+If you have both Python 2 and 3 installed, make sure the pip command is pointing to the Python 3 version. 
 (or replace 'pip' with whichever command you use to invoke pip for Python 3)
 
 ####Clone Repo
