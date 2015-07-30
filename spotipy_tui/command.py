@@ -40,11 +40,11 @@ class CommandHandler(object):
 
 
     def print_command_list(self):
-        command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
-                          [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit]
+        command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track] [C: Show Command List]
+                          [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit] [Y: Change Country Code]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front]
                           [A: Go to Album of Selected Track] [T: Top Tracks of Artist of Selected Track]
-                          [B: Back to Prev Track List] [C: Show Command List] [Y: Change Country Code]"""
+                          [B: Go back one track listing] [N: Go forward one track listing]"""
 
         command_menu = '\n'.join(' '.join(line.split()) for line in command_menu.split('\n'))
 

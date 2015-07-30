@@ -80,20 +80,15 @@ def intro(stdscreen):
                 Python 3.0+
 
             ~ Key Commands:
-                S: Search for music
-                I: Jump to song at index within search results
-                A: Go to album of current selection
-                T: Get current selection's artist's top tracks
-                C: Show Command List
-                F: Bring up Spotify desktop client
-                Y: Change Country ISO Code
-                [Space]: Toggle Play/Pause
-                [Enter]: Play track at current position
-                [Up]/K: Go Up
-                [Down]/J: Go Down
-                [Left]/H: Play previous track (Based on current cursor position)
-                [Right]/L: Play next track (Based on current cursor position)
-                Q: Quit
+                S: Search for music                             [Space]: Toggle Play/Pause
+                I: Jump to song at index within search results  [Enter]: Play track at current position
+                A: Go to album of current selection             [Up]/K: Go Up
+                T: Get current selection's artist's top tracks  [Down]/J: Go Down
+                C: Show Command List                            [Left]/H: Play previous track
+                F: Bring up Spotify desktop client              [Right]/L: Play next track
+                Y: Change Country ISO Code                      Q: Quit
+                B: Go backwards in track listing history
+                N: Go forward in track listing history
                '''
 
     stdscreen.addstr(0, 0, intro_text)
