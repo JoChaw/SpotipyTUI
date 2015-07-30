@@ -20,7 +20,8 @@ class CommandHandler(object):
         self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
-        self.track_history = []
+        self.back_track_history = []
+        self.forward_track_history = []
         self.track_start = 2
         self.curr_position = self.track_start
         self.track_window = stdscreen.subwin(track_list_height, track_list_length, 0, 0)
@@ -125,8 +126,16 @@ class CommandHandler(object):
         subprocess.call(apple_script_call)
 
     def prev_track_list(self):
-        if len(self.track_history) > 1:
-            self.track_list = self.track_history.pop()
+        if len(self.back_track_history) > 1:
+            self.forward_track_history.append(self.track_list)
+            self.track_list = self.back_track_history.pop()
+            self.curr_position = self.track_start
+            self.draw_track_list()
+
+    def next_track_list(self):
+        if len(self.forward_track_history) > 0:
+            self.back_track_history.append(self.track_list)
+            self.track_list = self.forward_track_history.pop()
             self.curr_position = self.track_start
             self.draw_track_list()
 
@@ -143,8 +152,9 @@ class CommandHandler(object):
         self.prompt_area.refresh()
 
         if len(user_search) > 0:
-            if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
-                self.track_history.append(self.track_list)
+            if not self.back_track_history or self.track_list != self.back_track_history[-1] and self.track_list:
+                self.forward_track_history = []
+                self.back_track_history.append(self.track_list)
 
             self.track_list = requester.execute_search(user_search, self.country_id, self.track_window.getmaxyx()[0]-3)
             self.curr_position = self.track_start
@@ -159,8 +169,9 @@ class CommandHandler(object):
             artist_id = track[7]
             artist_uri = track[6]
 
-            if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
-                self.track_history.append(self.track_list)
+            if not self.back_track_history or self.track_list != self.back_track_history[-1] and self.track_list:
+                self.forward_track_history = []
+                self.back_track_history.append(self.track_list)
 
             self.track_list = requester.get_artist_top(artist_name, artist_id, artist_uri, self.country_id)
             self.curr_position = self.track_start
@@ -173,8 +184,9 @@ class CommandHandler(object):
             album_id = track[8]
             album_uri = track[5]
 
-            if not self.track_history or self.track_list != self.track_history[-1] and self.track_list:
-                self.track_history.append(self.track_list)
+            if not self.back_track_history or self.track_list != self.back_track_history[-1] and self.track_list:
+                self.forward_track_history =  []
+                self.back_track_history.append(self.track_list)
 
             self.track_list = requester.get_album_tracks(album_name, album_id, album_uri)
             self.curr_position = self.track_start

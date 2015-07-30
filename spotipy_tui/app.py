@@ -21,6 +21,7 @@ def run_loop(stdscreen):
     prev_song_key_2 = 104
     play_pause_key = 32
     back_key = 98
+    forward_key = 110
     command_list_key = 99
     country_change_key = 121
 
@@ -41,6 +42,7 @@ def run_loop(stdscreen):
                     album_tracks_key : command_handler.get_album_tracks,
                     play_pause_key : command_handler.toggle_play_pause,
                     back_key : command_handler.prev_track_list,
+                    forward_key : command_handler.next_track_list,
                     command_list_key : command_handler.print_command_list,
                     country_change_key : command_handler.country_check,
                   }
