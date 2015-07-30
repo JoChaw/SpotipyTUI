@@ -38,6 +38,8 @@ $ spotipy-tui
 * C: Show command list
 * F: Bring Up Spotify desktop client
 * Y: Change Country ISO Code
+* B: Go back one listing in track listing history
+* N: Go forward one listing in track listing history
 * [Space]: Toggle Play/Pause
 * [Enter]: Play track at current cursor position
 * [Up]/K: Go Up
