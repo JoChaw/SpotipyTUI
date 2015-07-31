@@ -28,7 +28,7 @@ class CommandHandler(object):
         self.help_window = stdscreen.subwin(help_window_height, help_window_length, self.track_window.getmaxyx()[0], 1)
         self.prompt_area = self.help_window
         self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0], 10)
-        self.input_buffer  = textpad.Textbox(self.search_window)
+        self.input_buffer = textpad.Textbox(self.search_window)
         self.input_buffer.stripspaces = 1
         self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
@@ -185,7 +185,7 @@ class CommandHandler(object):
             album_uri = track[5]
 
             if not self.back_track_history or self.track_list != self.back_track_history[-1] and self.track_list:
-                self.forward_track_history =  []
+                self.forward_track_history = []
                 self.back_track_history.append(self.track_list)
 
             self.track_list = requester.get_album_tracks(album_name, album_id, album_uri)
