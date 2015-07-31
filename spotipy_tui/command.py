@@ -28,8 +28,6 @@ class CommandHandler(object):
         self.help_window = stdscreen.subwin(help_window_height, help_window_length, self.track_window.getmaxyx()[0], 1)
         self.prompt_area = self.help_window
         self.search_window = stdscreen.subwin(search_buffer_height, search_buffer_length, self.track_window.getmaxyx()[0], 10)
-        self.input_buffer = textpad.Textbox(self.search_window)
-        self.input_buffer.stripspaces = 1
         self.input_prompt = stdscreen.subwin(1, 15, self.track_window.getmaxyx()[0], 1)
         self.now_playing_window = stdscreen.subwin(1, 120, stdscreen.getmaxyx()[0] - 1, 0)
         self.command_list_hint = stdscreen.subwin(1, 30, stdscreen.getmaxyx()[0] - 3, 0)
@@ -37,7 +35,11 @@ class CommandHandler(object):
         self.command_list_hint.addstr(0, 0, "Press C for Command List")
         self.command_list_hint.refresh()
 
-
+    def get_input(self):
+        curses.echo()
+        user_input = self.search_window.getstr().decode(encoding="utf-8")
+        curses.noecho()
+        return user_input
 
     def print_command_list(self):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
@@ -80,7 +82,8 @@ class CommandHandler(object):
         self.input_prompt.addstr(0, 0, " Index:")
         self.search_window.clear()
         self.prompt_area.refresh()
-        desired_index = self.input_buffer.edit()
+
+        desired_index = self.get_input()
 
         self.prompt_area.clear()
         self.prompt_area.refresh()
@@ -146,7 +149,8 @@ class CommandHandler(object):
         self.input_prompt.addstr(0, 0, "Search:")
         self.search_window.clear()
         self.prompt_area.refresh()
-        user_search = self.input_buffer.edit()
+
+        user_search = self.get_input()
 
         self.prompt_area.clear()
         self.prompt_area.refresh()
@@ -239,7 +243,8 @@ class CommandHandler(object):
         self.input_prompt.addstr(0, 0, "Country:")
         self.search_window.clear()
         self.prompt_area.refresh()
-        user_input = self.input_buffer.edit()
+
+        user_input = self.get_input()
 
         if len(user_input) > 0:
             self.country_id = user_input.split()[0].upper()
