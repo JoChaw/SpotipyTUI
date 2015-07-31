@@ -10,7 +10,7 @@ def search_request(user_search, country_code, track_list_height):
     url = 'http://api.spotify.com/v1/search?q={0}&type=track,artist&market={1}&limit={2}'
     user_search = '+'.join(user_search.split())
 
-    url  = url.format(user_search, country_code, track_list_height)
+    url = url.format(user_search, country_code, track_list_height)
     raw_results = requests.get(url)
 
     return raw_results.json()
