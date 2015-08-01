@@ -35,10 +35,22 @@ class CommandHandler(object):
         self.command_list_hint.addstr(0, 0, "Press C for Command List")
         self.command_list_hint.refresh()
 
-    def get_input(self):
+    def get_input(self, prompt):
+        curses.curs_set(2)
+
+        self.prompt_area.clear()
+        self.input_prompt.addstr(0, 0, prompt)
+        self.search_window.clear()
+        self.prompt_area.refresh()
+
         curses.echo()
         user_input = self.search_window.getstr().decode(encoding="utf-8")
         curses.noecho()
+
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
+
+        curses.curs_set(0)
         return user_input
 
     def print_command_list(self):
@@ -76,17 +88,7 @@ class CommandHandler(object):
         self.current_song()
 
     def play_at_index(self):
-        curses.curs_set(2)
-
-        self.prompt_area.clear()
-        self.input_prompt.addstr(0, 0, " Index:")
-        self.search_window.clear()
-        self.prompt_area.refresh()
-
-        desired_index = self.get_input()
-
-        self.prompt_area.clear()
-        self.prompt_area.refresh()
+        desired_index = self.get_input(" Index:")
 
         try:
             desired_index = int(desired_index)
@@ -99,8 +101,6 @@ class CommandHandler(object):
         except ValueError:
             #TODO Error Message for invalid index
             pass
-
-        curses.curs_set(0)
 
     def current_song(self):
         if self.track_list != None:
@@ -143,17 +143,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def search_content(self):
-        curses.curs_set(2)
-
-        self.prompt_area.clear()
-        self.input_prompt.addstr(0, 0, "Search:")
-        self.search_window.clear()
-        self.prompt_area.refresh()
-
-        user_search = self.get_input()
-
-        self.prompt_area.clear()
-        self.prompt_area.refresh()
+        user_search = self.get_input("Search:")
 
         if len(user_search) > 0:
             if not self.back_track_history or self.track_list != self.back_track_history[-1] and self.track_list:
@@ -163,8 +153,6 @@ class CommandHandler(object):
             self.track_list = requester.execute_search(user_search, self.country_id, self.track_window.getmaxyx()[0]-3)
             self.curr_position = self.track_start
             self.draw_track_list()
-
-        curses.curs_set(0)
 
     def get_artist_top(self):
         if self.track_list != None:
@@ -225,7 +213,6 @@ class CommandHandler(object):
         self.track_window.refresh()
 
     def country_check(self):
-
         valid_countries = [line.strip() for line in open(os.path.dirname(os.path.realpath(__file__)) + "/country_iso_codes.txt", 'r')]
         self.country_check_prompt()
 
@@ -237,22 +224,10 @@ class CommandHandler(object):
 
 
     def country_check_prompt(self):
-        curses.curs_set(2)
-
-        self.prompt_area.clear()
-        self.input_prompt.addstr(0, 0, "Country:")
-        self.search_window.clear()
-        self.prompt_area.refresh()
-
-        user_input = self.get_input()
+        user_input = self.get_input("Country:")
 
         if len(user_input) > 0:
             self.country_id = user_input.split()[0].upper()
-
-        self.prompt_area.clear()
-        self.prompt_area.refresh()
-
-        curses.curs_set(0)
 
 
 
