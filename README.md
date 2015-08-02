@@ -46,6 +46,9 @@ $ spotipy-tui
 * [Down]/J: Go Down
 * [Left]/H: Play previous track (based on cursor position)
 * [Right]/L: Play next track (based on cursor position)
+* O: Lower volume
+* P: Increase volume
+* V: Set volume level
 * Q: Quit
 
 ## Dependencies 
