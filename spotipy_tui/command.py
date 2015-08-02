@@ -17,7 +17,6 @@ class CommandHandler(object):
         help_window_length = 120
         help_window_height = 5
 
-        self.current_volume = 80
         self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
@@ -240,8 +239,7 @@ class CommandHandler(object):
                     #Case: Unable to convert user input to type Int
                     self.flash_message(":: Volume Range 1-100 ::", 0.8)
 
-        self.current_volume = desired_volume
-        self.set_curr_volume(self.current_volume)
+        self.set_curr_volume(desired_volume)
 
     def set_curr_volume(self, volume_level):
         set_volume_command = 'tell application "Spotify" \n set sound volume to {0} \n end tell'.format(volume_level)
