@@ -17,6 +17,7 @@ class CommandHandler(object):
         help_window_length = 120
         help_window_height = 5
 
+        self.current_volume = 80
         self.country_id = None
         self.stdscreen = stdscreen
         self.track_list = None
@@ -35,30 +36,12 @@ class CommandHandler(object):
         self.command_list_hint.addstr(0, 0, "Press C for Command List")
         self.command_list_hint.refresh()
 
-    def get_input(self, prompt):
-        curses.curs_set(2)
-
-        self.prompt_area.clear()
-        self.input_prompt.addstr(0, 0, prompt)
-        self.search_window.clear()
-        self.prompt_area.refresh()
-
-        curses.echo()
-        user_input = self.search_window.getstr().decode(encoding="utf-8")
-        curses.noecho()
-
-        self.prompt_area.clear()
-        self.prompt_area.refresh()
-
-        curses.curs_set(0)
-        return user_input
-
     def print_command_list(self):
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit] [Y: Change Country Code]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front] [C: Show Command List]
-                          [A: Go to Album of Selected Track] [T: Top Tracks of Artist of Selected Track]
-                          [B: Go back one track listing] [N: Go forward one track listing]"""
+                          [A: Go to Album of Selected Track] [T: Top Tracks of Artist of Selected Track] [V: Set Volume]
+                          [B: Previous track listing ] [N: Next track listing] [O: Decrease Volume] [P: Increase Volume]"""
 
         command_menu = '\n'.join(' '.join(line.split()) for line in command_menu.split('\n'))
 
@@ -217,11 +200,8 @@ class CommandHandler(object):
         self.country_check_prompt()
 
         while self.country_id not in valid_countries:
-            self.prompt_area.addstr("::Invalid Country ISO Code::")
-            self.prompt_area.refresh()
-            time.sleep(1)
+            self.flash_message(":: Invalid Country ISO Code ::", 0.7)
             self.country_check_prompt()
-
 
     def country_check_prompt(self):
         user_input = self.get_input("Country:")
@@ -229,7 +209,72 @@ class CommandHandler(object):
         if len(user_input) > 0:
             self.country_id = user_input.split()[0].upper()
 
+    def increment_volume(self):
+        set_volume_command = 'tell application "Spotify" \n set sound volume to (get sound volume + 5) \n end tell'
+        apple_script_call = ['osascript', '-e', set_volume_command]
+        subprocess.call(apple_script_call)
+        self.flash_message(":: Volume ++ ::", 0.1)
 
+    def decrement_volume(self):
+        set_volume_command = 'tell application "Spotify" \n set sound volume to (get sound volume - 5) \n end tell'
+        apple_script_call = ['osascript', '-e', set_volume_command]
+        subprocess.call(apple_script_call)
+        self.flash_message(":: Volume -- ::", 0.1)
+
+    def user_volume_input(self):
+        while True:
+            try:
+                desired_volume = self.get_input(" Volume:")
+
+                #If no user input, RETURN
+                if not desired_volume:
+                    return
+
+                desired_volume = int(desired_volume)
+
+                if desired_volume < 0 or desired_volume > 100:
+                    self.flash_message(":: Volume Range 1-100 ::", 0.8)
+                else:
+                    break
+            except ValueError:
+                    #Case: Unable to convert user input to type Int
+                    self.flash_message(":: Volume Range 1-100 ::", 0.8)
+
+        self.current_volume = desired_volume
+        self.set_curr_volume(self.current_volume)
+
+    def set_curr_volume(self, volume_level):
+        set_volume_command = 'tell application "Spotify" \n set sound volume to {0} \n end tell'.format(volume_level)
+        apple_script_call = ['osascript', '-e', set_volume_command]
+        subprocess.call(apple_script_call)
+
+    def flash_message(self, message, flash_speed):
+        self.prompt_area.clear()
+        self.prompt_area.addstr(message)
+        self.prompt_area.refresh()
+
+        time.sleep(flash_speed)
+
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
+
+    def get_input(self, prompt):
+        curses.curs_set(2)
+
+        self.prompt_area.clear()
+        self.input_prompt.addstr(0, 0, prompt)
+        self.search_window.clear()
+        self.prompt_area.refresh()
+
+        curses.echo()
+        user_input = self.search_window.getstr().decode(encoding="utf-8")
+        curses.noecho()
+
+        self.prompt_area.clear()
+        self.prompt_area.refresh()
+
+        curses.curs_set(0)
+        return user_input
 
 
 

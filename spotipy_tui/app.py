@@ -24,6 +24,9 @@ def run_loop(stdscreen):
     forward_key = 110
     command_list_key = 99
     country_change_key = 121
+    volume_up_key = 112
+    volume_down_key = 111
+    volume_set_key = 118
 
     command_dict = {
                     move_up_key : command_handler.move_up,
@@ -45,6 +48,9 @@ def run_loop(stdscreen):
                     forward_key : command_handler.next_track_list,
                     command_list_key : command_handler.print_command_list,
                     country_change_key : command_handler.country_check,
+                    volume_up_key : command_handler.increment_volume,
+                    volume_down_key : command_handler.decrement_volume,
+                    volume_set_key : command_handler.user_volume_input,
                   }
 
     curses.curs_set(0)
@@ -86,9 +92,9 @@ def intro(stdscreen):
                 T: Get current selection's artist's top tracks  [Down]/J: Go Down
                 C: Show Command List                            [Left]/H: Play previous track
                 F: Bring up Spotify desktop client              [Right]/L: Play next track
-                Y: Change Country ISO Code                      Q: Quit
-                B: Go backwards in track listing history
-                N: Go forward in track listing history
+                Y: Change Country ISO Code                      O: Decrease Volume
+                B: Go backwards in track listing history        P: Increase Volume
+                N: Go forward in track listing history          V: Set Volume Level
                '''
 
     stdscreen.addstr(0, 0, intro_text)
