@@ -1,4 +1,3 @@
-from curses import textpad
 import os
 import time
 import curses
