@@ -1,4 +1,6 @@
 # Spotipy-TUI 
+[![PyPI version](https://badge.fury.io/py/spotipy-tui.svg)](http://badge.fury.io/py/spotipy-tui)
+
 Spotipy-TUI is a text-based UI program to control the Spotify desktop client on OSX. <br>
 Run it within a terminal session. <br>
 Requires OSX and Python 3. <br>
