@@ -80,7 +80,7 @@ class CommandHandler(object):
                 self.draw_track_list()
 
         except ValueError:
-            #TODO Error Message for invalid index
+            #Case: Invalid Index
             pass
 
     def current_song(self):
