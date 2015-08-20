@@ -35,6 +35,7 @@ class CommandHandler(object):
         self.command_list_hint.refresh()
 
     def print_command_list(self):
+        """Display all possible commands available to the user."""
         command_menu = """[<Up>/K: Go Up] [<Down>/J: Go Down] [<Left>/H: Prev Track] [<Right>/L: Next Track]
                           [<Enter>: Play Selected Track] [<Space>: Toggle Play/Pause] [Q: Quit] [Y: Change Country Code]
                           [S: Search] [I: Play Track at Index] [F: Bring Spotify Client to Front] [C: Show Command List]
@@ -48,27 +49,33 @@ class CommandHandler(object):
         self.help_window.refresh()
 
     def set_curr_position(self, curr_position):
+        """Set the current position of the track list cursor."""
         self.curr_position = curr_position
 
     def move_up(self):
+        """Move the track list cursor position up one."""
         if self.track_list != None and self.curr_position > self.track_start:
             self.curr_position -= 1
             self.draw_track_list()
 
     def move_down(self):
+        """Move the track list cursor position down one."""
         if self.track_list != None and self.curr_position < (len(self.track_list) + self.track_start - 1):
             self.curr_position += 1
             self.draw_track_list()
 
     def next_song(self):
+        """Play the next song in the track list (based on current cursor position)."""
         self.move_down()
         self.current_song()
 
     def prev_song(self):
+        """Play the previous song in the track list (based on current cursor position)."""
         self.move_up()
         self.current_song()
 
     def play_at_index(self):
+        """Play song located at a specific index within the current track list. User will be prompted for desired index."""
         desired_index = self.get_input(" Index:")
 
         try:
@@ -84,14 +91,17 @@ class CommandHandler(object):
             pass
 
     def current_song(self):
+        """Play song track list cursor is currently on."""
         if self.track_list != None:
             self.play_song(self.track_list[self.curr_position - self.track_start])
 
     def toggle_play_pause(self):
+        """Send command to Spotify desktop client to pause/play."""
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to playpause']
         subprocess.call(apple_script_call)
 
     def play_song(self, track):
+        """Given track info, send command to Spotify desktop client to play it."""
         track_spotify_uri = track[4]
         apple_script_call = ['osascript', '-e', 'tell application "Spotify" to play track "{0}"'.format(track_spotify_uri)]
 
@@ -99,17 +109,20 @@ class CommandHandler(object):
         self.update_now_playing(track)
 
     def update_now_playing(self, track):
+        """Update the 'Now Playing' string to reflect currently playing track."""
         now_playing = ">>> Now Playing: {0} --- {1} <<<".format(track[1][:50], track[2][:40])
         self.now_playing_window.clear()
         self.now_playing_window.addstr(0, 0, now_playing)
         self.now_playing_window.refresh()
 
     def show_client(self):
+        """Bring Spotify desktop client to the front of the screen."""
         get_client_command = 'tell application "Spotify" \n activate \n end tell'
         apple_script_call = ['osascript', '-e', get_client_command]
         subprocess.call(apple_script_call)
 
     def prev_track_list(self):
+        """Go back to the previously displayed track listing."""
         if len(self.back_track_history) > 1:
             self.forward_track_history.append(self.track_list)
             self.track_list = self.back_track_history.pop()
@@ -117,6 +130,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def next_track_list(self):
+        """Go ahead one track listing in the user's track listing history."""
         if len(self.forward_track_history) > 0:
             self.back_track_history.append(self.track_list)
             self.track_list = self.forward_track_history.pop()
@@ -124,6 +138,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def search_content(self):
+        """Fulfill user's search request for music by keywords."""
         user_search = self.get_input("Search:")
 
         if len(user_search) > 0:
@@ -136,6 +151,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def get_artist_top(self):
+        """Display the top tracks (according to Spotify) by the artist of the currently selected track."""
         if self.track_list != None:
             track = self.track_list[self.curr_position - self.track_start]
             artist_name = track[2]
@@ -151,6 +167,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def get_album_tracks(self):
+        """Display all tracks in the album of the currently selected track."""
         if self.track_list != None:
             track = self.track_list[self.curr_position - self.track_start]
             album_name = track[3]
@@ -166,6 +183,7 @@ class CommandHandler(object):
             self.draw_track_list()
 
     def draw_track_list(self):
+        """Handles all of the track list displaying."""
         self.track_window.clear()
 
         result_line = '{0:<2} | {1:<40} | {2:<25} | {3:<40}'
