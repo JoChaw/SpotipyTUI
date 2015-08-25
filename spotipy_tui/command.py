@@ -212,6 +212,7 @@ class CommandHandler(object):
         self.track_window.refresh()
 
     def country_check(self):
+        """Ensure a valid country ISO code is inputted by the user."""
         valid_countries = [line.strip() for line in open(os.path.dirname(os.path.realpath(__file__)) + "/country_iso_codes.txt", 'r')]
         self.country_check_prompt()
 
@@ -220,24 +221,28 @@ class CommandHandler(object):
             self.country_check_prompt()
 
     def country_check_prompt(self):
+        """Country check helper method. Gets user input and properly formats it for validation."""
         user_input = self.get_input("Country:")
 
         if len(user_input) > 0:
             self.country_id = user_input.split()[0].upper()
 
     def increment_volume(self):
+        """Increase the volume of the Spotify desktop client."""
         set_volume_command = 'tell application "Spotify" \n set sound volume to (get sound volume + 5) \n end tell'
         apple_script_call = ['osascript', '-e', set_volume_command]
         subprocess.call(apple_script_call)
         self.flash_message(":: Volume ++ ::", 0.1)
 
     def decrement_volume(self):
+        """Decrease the volume of the Spotify desktop client."""
         set_volume_command = 'tell application "Spotify" \n set sound volume to (get sound volume - 5) \n end tell'
         apple_script_call = ['osascript', '-e', set_volume_command]
         subprocess.call(apple_script_call)
         self.flash_message(":: Volume -- ::", 0.1)
 
     def user_volume_input(self):
+        """Allows the user to set desired volume level."""
         while True:
             try:
                 desired_volume = self.get_input(" Volume:")
@@ -259,11 +264,13 @@ class CommandHandler(object):
         self.set_curr_volume(desired_volume)
 
     def set_curr_volume(self, volume_level):
+        """Sets Spotify desktop client to 'volume_level'"""
         set_volume_command = 'tell application "Spotify" \n set sound volume to {0} \n end tell'.format(volume_level)
         apple_script_call = ['osascript', '-e', set_volume_command]
         subprocess.call(apple_script_call)
 
     def flash_message(self, message, flash_speed):
+        """Takes in a message string and flashes it on screen for 'flash_speed' seconds."""
         self.prompt_area.clear()
         self.prompt_area.addstr(message)
         self.prompt_area.refresh()
@@ -274,6 +281,7 @@ class CommandHandler(object):
         self.prompt_area.refresh()
 
     def get_input(self, prompt):
+        """Get user input through the user interface and return it."""
         curses.curs_set(2)
 
         self.prompt_area.clear()
