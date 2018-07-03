@@ -9,16 +9,16 @@ Run it within a terminal session. <br>
 * If the terminal window is not large enough, the program can't start up.
 * [Quick Demo Video](https://www.youtube.com/watch?v=BYVSOE8mjWs)
 
-##Installation
+## Installation
 
-####Pip
+#### Pip
 ```bash
 $ pip install spotipy-tui
 ```
 If you have both Python 2 and 3 installed, make sure the pip command is pointing to the Python 3 version. 
 (or replace 'pip' with whichever command you use to invoke pip for Python 3)
 
-####Clone Repo
+#### Clone Repo
 ```bash 
 $ git clone https://github.com/JonShepChen/SpotipyTUI.git
 $ cd SpotipyTUI
@@ -27,12 +27,12 @@ $ python setup.py install
 If you have both Python 2 and 3 installed, make sure the python command is pointing to the Python 3 version.
 (or replace 'python' with whichever command you use to invoke Python 3)
 
-##Usage 
+## Usage 
 ```python 
 # Start the program
 $ spotipy-tui
 ```
-##Command List
+## Command List
 * S: Search for music
 * I: Jump to song at index within search results
 * A: Go to album of current selection
